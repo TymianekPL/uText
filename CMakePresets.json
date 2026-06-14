@@ -1,0 +1,224 @@
+{
+     "version": 3,
+	"configurePresets": [
+		{
+			"name": "base",
+			"hidden": true,
+			"generator": "Ninja",
+			"description": "The base preset with Ninja",
+			"cacheVariables": {
+				"CMAKE_CXX_STANDARD": "23",
+				"CMAKE_CXX_STANDARD_REQUIRED": "ON",
+				"CMAKE_CXX_EXTENSIONS": "ON",
+				"CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+				"ENABLE_CCACHE": "ON",
+				"CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+			}
+		},
+		{
+			"name": "debug",
+			"hidden": true,
+			"inherits": [ "base" ],
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug"
+			}
+		},
+		{
+			"name": "release",
+			"hidden": true,
+			"inherits": [ "base" ],
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release"
+			}
+		},
+		{
+			"name": "relwithdebinfo",
+			"hidden": true,
+			"inherits": [ "base" ],
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "RelWithDebInfo"
+			}
+		},
+		{
+			"name": "windows",
+			"hidden": true,
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
+			}
+		},
+		{
+			"name": "linux",
+			"hidden": true,
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			}
+		},
+		{
+			"name": "clang",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_CXX_COMPILER": "clang++",
+				"CMAKE_CXX_FLAGS_DEBUG_INIT": "-O0"
+			}
+		},
+		{
+			"name": "gcc",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_CXX_COMPILER": "g++",
+				"CMAKE_CXX_FLAGS_DEBUG_INIT": "-Og"
+			}
+		},
+		{
+			"name": "msvc",
+			"hidden": true,
+			"cacheVariables": {
+				"CMAKE_CXX_COMPILER": "cl",
+				"CMAKE_CXX_FLAGS_INIT": "/Zc:inline /Zc:__cplusplus /Zc:enumTypes /Zc:templateScope /Zc:throwingNew /guard:cf",
+				"CMAKE_CXX_FLAGS_DEBUG_INIT": "/Od /Zi /sdl /GS",
+				"CMAKE_CXX_FLAGS_RELEASE_INIT": "/O2 /Oi /GF /Gy /Ot /Ob3 /Gw /GL"
+			}
+		},
+		{
+			"name": "windows-clang-debug",
+			"inherits": [ "windows", "clang", "debug" ],
+			"cacheVariables": {
+				"CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreadedDebugDLL"
+			},
+			"binaryDir": "${sourceDir}/out/build/windows-clang-debug"
+		},
+		{
+			"name": "windows-msvc-debug",
+			"inherits": [ "windows", "msvc", "debug" ],
+			"cacheVariables": {
+				"CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreadedDebugDLL"
+			},
+			"binaryDir": "${sourceDir}/out/build/windows-msvc-debug"
+		},
+		{
+			"name": "windows-gcc-debug",
+			"inherits": [ "windows", "gcc", "debug" ],
+			"binaryDir": "${sourceDir}/out/build/windows-gcc-debug"
+		},
+		{
+			"name": "windows-clang-release",
+			"inherits": [ "windows", "clang", "release" ],
+			"cacheVariables": {
+				"CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded"
+			},
+			"binaryDir": "${sourceDir}/out/build/windows-clang-release"
+		},
+		{
+			"name": "windows-msvc-release",
+			"inherits": [ "windows", "msvc", "release" ],
+			"cacheVariables": {
+				"CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded"
+			},
+			"binaryDir": "${sourceDir}/out/build/windows-msvc-release"
+		},
+		{
+			"name": "windows-gcc-release",
+			"inherits": [ "windows", "gcc", "release" ],
+			"binaryDir": "${sourceDir}/out/build/windows-gcc-release"
+		},
+		{
+			"name": "tests",
+			"hidden": true,
+			"cacheVariables": {
+				"ENABLE_TESTS": "ON"
+			}
+		},
+		{
+			"name": "windows-clang-debug-tests",
+			"inherits": [ "windows-clang-debug", "tests" ]
+		},
+		{
+			"name": "windows-msvc-debug-tests",
+			"inherits": [ "windows-msvc-debug", "tests" ]
+		},
+		{
+			"name": "windows-gcc-debug-tests",
+			"inherits": [ "windows-gcc-debug", "tests" ]
+		},
+		{
+			"name": "windows-clang-release-tests",
+			"inherits": [ "windows-clang-release", "tests" ]
+		},
+		{
+			"name": "windows-msvc-release-tests",
+			"inherits": [ "windows-msvc-release", "tests" ]
+		},
+		{
+			"name": "windows-gcc-release-tests",
+			"inherits": [ "windows-gcc-release", "tests" ]
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "windows-clang-debug",
+			"configurePreset": "windows-clang-debug"
+		},
+		{
+			"name": "windows-msvc-debug",
+			"configurePreset": "windows-msvc-debug"
+		},
+		{
+			"name": "windows-gcc-debug",
+			"configurePreset": "windows-gcc-debug"
+		},
+		{
+			"name": "windows-clang-release",
+			"configurePreset": "windows-clang-release"
+		},
+		{
+			"name": "windows-msvc-release",
+			"configurePreset": "windows-msvc-release"
+		},
+		{
+			"name": "windows-gcc-release",
+			"configurePreset": "windows-gcc-release"
+		},
+		{
+			"name": "windows-clang-debug-tests",
+			"configurePreset": "windows-clang-debug-tests"
+		},
+		{
+			"name": "windows-msvc-debug-tests",
+			"configurePreset": "windows-msvc-debug-tests"
+		},
+		{
+			"name": "windows-gcc-debug-tests",
+			"configurePreset": "windows-gcc-debug-tests"
+		},
+		{
+			"name": "windows-clang-release-tests",
+			"configurePreset": "windows-clang-release-tests"
+		},
+		{
+			"name": "windows-msvc-release-tests",
+			"configurePreset": "windows-msvc-release-tests"
+		},
+		{
+			"name": "windows-gcc-release-tests",
+			"configurePreset": "windows-gcc-release-tests"
+		}
+	],
+     "testPresets": [
+          {
+               "name": "windows-clang-debug",
+               "configurePreset": "windows-clang-debug-tests"
+          },
+		{
+			"name": "windows-msvc-debug",
+			"configurePreset": "windows-msvc-debug-tests"
+		},
+		{
+			"name": "windows-gcc-debug",
+			"configurePreset": "windows-gcc-debug-tests"
+		}
+     ]
+}
